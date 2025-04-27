@@ -73,13 +73,15 @@ class TurboMindModelwithChatTemplate(BaseModel):
             if isinstance(generation_config.eos_token_id, int):
                 potential_stop_words.append(self.tokenizer.decode(generation_config.eos_token_id))
             else:
-                assert isinstance(generation_config.eos_token_id, list)
-                for token_id in generation_config.eos_token_id:
-                    stop_word = self.tokenizer.decode(token_id)
-                    if stop_word.startswith(' '):
-                        self.logger.warning(f'stop_word "{stop_word}" contains blanks, which will be stripped')
-                        stop_word = stop_word.strip()
-                    potential_stop_words.append(stop_word)
+                print(f"generation_config.eos_token_id: {generation_config.eos_token_id}")
+                if generation_config.eos_token_id:
+                    assert isinstance(generation_config.eos_token_id, list)
+                    for token_id in generation_config.eos_token_id:
+                        stop_word = self.tokenizer.decode(token_id)
+                        if stop_word.startswith(' '):
+                            self.logger.warning(f'stop_word "{stop_word}" contains blanks, which will be stripped')
+                            stop_word = stop_word.strip()
+                        potential_stop_words.append(stop_word)
         if self.tokenizer.eos_token is not None:
             potential_stop_words.append(self.tokenizer.eos_token)
         potential_stop_words = list(set(potential_stop_words))
