@@ -279,21 +279,25 @@ api_meta_template = dict(
 )
 
 obj_llm_judge_cfg = dict(
-    abbr='qwen2-5-32B-Instruct',
+    abbr='Qwen2_5_32b',
     type=OpenAISDK,
-    path='Qwen/Qwen2.5-32B-Instruct',
+    path='Qwen2_5_32b',
     key='EMPTY',
+    retry=5,
     openai_api_base=[
-        'http://10.130.135.82:4000/v1',
+        'http://10.140.60.135:10000/v1',
+        'http://10.140.60.135:10001/v1',
+        'http://10.140.60.135:10002/v1',
+        'http://10.140.60.135:10003/v1',
     ],
     mode='mid',
     meta_template=api_meta_template,
     query_per_second=5,
     batch_size=128,
     temperature=0.001,
-    tokenizer_path='gpt-4o-2024-05-13',
+    tokenizer_path='/mnt/petrelfs/share_data/gulixin/checkpoints/Qwen2.5-32B-Instruct',
     max_out_len=8192,
-    max_seq_len=45000,
+    max_seq_len=23808,
 )
 
 for item in datasets:
